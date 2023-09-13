@@ -26,7 +26,6 @@ const App = () => {
       </>
     );
   };
-
   console.log("isAuthenticated", isAuthenticated)
 
   useEffect(() => {
