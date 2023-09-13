@@ -1,0 +1,304 @@
+* {
+  text-align: center;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+
+.navbar {
+  margin: 0px 0px 0px 0px;
+  padding: 5px 20px 0px 20px;
+  background: aliceblue;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: flex;
+  font-weight: 600;
+  padding-bottom: 5px;
+  color: #00599d;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+
+.text-div {
+  width: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+  padding-right: 4rem;
+  font-size: 25px;
+  align-items: center;
+}
+.secondry-container {
+  display: flex;
+}
+
+.sidebar {
+  padding: 10px;
+  border-radius: 0px;
+  width: 250px;
+  background-color: #2d4059; /* Set a background color */
+}
+
+.sidebar div {
+  padding: 8px 5px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  overflow-x: hidden;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease; /* Smooth background color transition */
+}
+.active {
+  background-color: #e0e0e0;
+  color: black !important;
+}
+.sidebar div:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
+.sidebar .element:hover {
+  background-color: #e0e0e0;
+  color: black /* Change background color on hover */
+}
+
+.preview {
+  width: 83vw;
+  margin: 20px 20px 20px 20px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+}
+
+
+
+
+/* // ----------------- custom header============ */
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Update .view-header-section styles */
+.view-header-section {
+  display: flex;
+  align-items: center;
+}
+
+/* Add styling for the buttons */
+.button-Prev,
+.button-Next {
+  margin-left: 10px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-Prev[disabled],
+.button-Next[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-Prev:hover,
+.button-Next:hover {
+  background-color: #0056b3;
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .secondry-container {
+    flex-direction: column; /* Stack the sidebar on top of the content */
+  }
+
+  .sidebar {
+    display: none; /* Hide the sidebar */
+  }
+
+  .preview {
+    width: 100%; /* Make the content take the full width */
+    margin: 20px 0; /* Adjust margin as needed */
+  }
+
+  .text-div {
+  font-size: 18px;
+  }
+  
+}
+
+
+
+/* Loader styles */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  background: rgba(0, 0, 0, 0.192);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+
+
+/* ----SSO Ui ----- */
+
+
+
+.centered-card {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 91vh;
+  min-width: 100vw;
+  background-color: white;
+  width: 300px;
+  text-align: center;
+}
+.ms-logo {
+  height: 25px;
+  padding: 15px 15px 5px 15px;
+}
+
+.ms-btn-card {
+  padding: 6rem;
+  background-color: #f0f8ff;
+  border-radius: 10%;
+}
+
+.microsoft-button {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.microsoft-button:hover {
+  background-color: #005a9e;
+}
+
+
+
+
+
+/* ErrorComponent.css */
+.error-container {
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: max-content;
+}
+
+.message-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message {
+  color: #d9534f;
+}
+
+.status-code {
+  color: #d9534f;
+  margin-right: 10px;
+}
+
+.error-code {
+  color: red;
+  margin-right: 10px;
+}
+
+
+.expired-message {
+  color: #777;
+}
+
+.url-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 795px;
+  width: auto;
+}
+
+
+/* Add this CSS to your component's CSS file or styles */
+
+/* Style the table container with a maximum height and make it scrollable */
+.table-container {
+  min-height: 795px; /* Adjust the maximum height as needed */
+  max-height: 795px; /* Adjust the maximum height as needed */
+  overflow-y: auto;
+}
+
+/* Style the table */
+.csv-table {
+  width: -webkit-fill-available;
+  border-collapse: collapse;
+  margin: 20px;
+  font-size: 14px;
+}
+
+.csv-table tr {
+  white-space: nowrap;
+}
+.csv-table th,
+.csv-table td {
+  width: fit-content !important;
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .csv-table {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .csv-table {
+    font-size: 12px;
+  }
+}
