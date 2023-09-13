@@ -7,6 +7,16 @@ import { useMsal } from "@azure/msal-react";
 import { redirect } from "react-router-dom";
 import CsvReader from "./CsvReader";
 
+
+const extensionSupportCheck = (fileURL) => {
+  const extensionsSupported = [".csv", ".odt", ".doc", ".docx", ".gif", ".htm", ".html", ".jpg", ".jpeg", ".pdf", ".ppt", ".pptx", ".tiff", ".txt", ".xls", ".xlsx"];
+  const fileExtension = fileURL?.substring(fileURL?.lastIndexOf('.')).toLowerCase(); // Convert to lowercase
+  const isSupported = extensionsSupported.includes(fileExtension);
+
+  return isSupported;
+}
+
+
 const getHeaders = () => {
 
   // encrypting variables 
@@ -43,14 +53,13 @@ const getHeaders = () => {
 }
 
 const ErrorComponent = ({ error, expired, logOut }) => {
-  console.log(error , " <-error component triggered");
   return (
     <>
-      {(error?.data?.statuscode) && (
+      {(error?.data?.statuscode === 400 || error?.data?.statuscode === 404 || error?.data?.statuscode === 501 || error?.data?.statuscode === 504) && (
         <div className="message-container">
           <div className="error-container">
             <div className="message-container">
-              <span>ERROR: <span className="error-message"> {error?.data?.status}</span></span>
+          <span className="error-message">{error?.data?.status}</span>
               {error?.data?.statuscode === 404 && (
                 <button className="button-Prev" onClick={() => logOut()}>
                   Log Out
@@ -77,7 +86,7 @@ function Preview({ responseD }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isURLLoading, setIsURLLoading] = useState(false);
   const [error, setError] = useState(false);
- 
+
   const URL = "https://anthempreviewnew.azurewebsites.net/DownloadAzureFile.php";
 
   useEffect(() => {
@@ -114,7 +123,7 @@ function Preview({ responseD }) {
       //passing body in the first parameter and in second parameter passing headers
 
       const data = response?.data?.FileArray
-      
+
       //since no file found message is coming in response not in error
       setError(response)
       setFilesObj(data);
@@ -142,7 +151,7 @@ function Preview({ responseD }) {
       });
 
       const data = response?.data?.fileUrl
-      
+
       console.log(data, "+++file URL+++");
       setError(response)
       setFileURL("https://" + data)
@@ -161,7 +170,7 @@ function Preview({ responseD }) {
     }
   }, [query, responseD]);
 
-    //calling get file URL api when we get sso response and param ID
+  //calling get file URL api when we get sso response and param ID
   useEffect(() => {
     if (files) {
       getFilesURLFromServer();
@@ -214,7 +223,8 @@ function Preview({ responseD }) {
     instance
       .logoutPopup()
       .then((data) => {
-        redirect(`/?id=${query.id}`);
+        redirect(`/?id=${query.id}&bodyData=${query.bodyData}&salesforceURI=${query.salesforceURI}&tokenURL=${query.tokenURL}`);
+        window.location.reload();
       })
       .catch((e) => {
         console.error(e);
@@ -282,24 +292,37 @@ function Preview({ responseD }) {
                     </div>
                   </div>
                   {
-                   fileURL && isURLLoading ?
-                      <div className="url-loading"><div>Loading...</div></div>
-                      : files[index]?.substring(files[index]?.lastIndexOf('.')) === '.csv' ? <CsvReader key={files[index]} url={fileURL} /> : <DocViewer
-                        documents={[{
-                          uri: fileURL
-                        }]}
-                        ref={docViewerRef}
-                        config={{
-                          header: {
-                            disableHeader: true,
-                            disableFileName: false,
-                            retainURLParams: false,
-                          },
-                        }}
-                        pluginRenderers={DocViewerRenderers}
-                        style={{ height: 795 }}
-                      />
+                    fileURL ? (
+                      extensionSupportCheck(files[index]) ? (
+                        isURLLoading ? (
+                          <div className="url-loading">
+                            <div>Loading...</div>
+                          </div>
+                        ) : files[index]?.substring(files[index]?.lastIndexOf('.')) === '.csv' ? (
+                          <CsvReader key={files[index]} url={fileURL} />
+                        ) : (
+                          <DocViewer
+                            documents={[{ uri: fileURL }]}
+                            ref={docViewerRef}
+                            config={{
+                              header: {
+                                disableHeader: true,
+                                disableFileName: false,
+                                retainURLParams: false,
+                              },
+                            }}
+                            pluginRenderers={DocViewerRenderers}
+                            style={{ height: 795 }}
+                          />
+                        )
+                      ) : (
+                        <div className="url-loading">
+                          <div className="not-supported">File not supported for previewing.</div>
+                        </div>
+                      )
+                    ) : null
                   }
+
                 </div>
               </div>
             </div>

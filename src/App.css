@@ -218,9 +218,8 @@
 /* ErrorComponent.css */
 .error-container {
   margin-top: 20px;
-  background-color: #f8f8f8;
+  background-color: #fcecec;
   padding: 20px;
-  border: 1px solid #ddd;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -235,7 +234,8 @@
 }
 
 .error-message {
-  color: #d9534f;
+  color:rgb(223 0 0 / 76%); 
+  font-weight: bold; 
 }
 
 .status-code {
@@ -251,6 +251,14 @@
 
 .expired-message {
   color: #777;
+}
+
+.not-supported {
+  background-color: #e7777724; /* Red background color */
+  color:rgb(223 0 0 / 76%); /* White text color */
+  padding: 10px; /* Add some padding */
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold text */
 }
 
 .url-loading {
