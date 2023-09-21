@@ -6,12 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import { MsalProvider } from '@azure/msal-react';
 import { msalConfig } from './authConfig';
 import { PublicClientApplication } from '@azure/msal-browser';
+import FolderTree from './components/FolderTree';
+import { explorer } from './components/dummy';
 const msalInstance = new PublicClientApplication(msalConfig);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <MsalProvider instance={msalInstance}>
-    <App />
+    {/* <App /> */}
+    <FolderTree explorer={explorer}/>
   </MsalProvider>
 );
 
