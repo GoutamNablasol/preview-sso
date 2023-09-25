@@ -9,7 +9,7 @@ import CsvReader from "./CsvReader";
 
 
 const extensionSupportCheck = (fileURL) => {
-  const extensionsSupported = [".csv", ".odt", ".doc", ".docx", ".gif", ".htm", ".html", ".jpg", ".jpeg", ".pdf", ".ppt", ".pptx", ".tiff", ".txt", ".xls", ".xlsx"];
+  const extensionsSupported = [".csv", ".odt", ".doc", ".docx", ".gif", ".htm", ".html", ".jpg", ".jpeg", ".png", ".pdf", ".ppt", ".pptx", ".tiff", ".txt", ".xls", ".xlsx"];
   const fileExtension = fileURL?.substring(fileURL?.lastIndexOf('.')).toLowerCase(); // Convert to lowercase
   const isSupported = extensionsSupported.includes(fileExtension);
 
@@ -52,14 +52,14 @@ const getHeaders = () => {
 
 }
 
-const ErrorComponent = ({ error, expired, logOut }) => {
+const ErrorComponent = ({ error, query, expired, logOut }) => {
   return (
     <>
-      {(error?.data?.statuscode === 400 || error?.data?.statuscode === 404 || error?.data?.statuscode === 501 || error?.data?.statuscode === 504) && (
+      {(error?.data?.statuscode === 400 || error?.data?.statuscode === 404 || error?.data?.statuscode === 501 || error?.data?.statuscode === 504 || query === '404') && (
         <div className="message-container">
           <div className="error-container">
             <div className="message-container">
-          <span className="error-message">{error?.data?.status}</span>
+          <span className="error-message">{query === '404' && 'There are no files to Preview.'}{error?.data?.status}</span>
               {error?.data?.statuscode === 404 && (
                 <button className="button-Prev" onClick={() => logOut()}>
                   Log Out
@@ -96,11 +96,8 @@ function Preview({ responseD }) {
     const urlParams = new URLSearchParams(queryString);
     // Access the data using the parameter name you used while passing it
     const id = urlParams.get('id');
-    const bodyData = urlParams.get('bodyData');
-    const salesforceURI = urlParams.get('salesforceURI');
-    const tokenURL = urlParams.get('tokenURL');
     // Now you can use the 'data' variable in your component
-    setQuery({ id, bodyData, salesforceURI, tokenURL })
+    setQuery({ id })
 
   }, []);
 
@@ -111,12 +108,9 @@ function Preview({ responseD }) {
 
     try {
       const response = await axios.post(URL, {
-        id: query.id,
+        id: query?.id,
         type: "fetchFileList",
         email: responseD?.mail,
-        bodyData: query.bodyData,
-        salesforceURI: query.salesforceURI,
-        tokenURL: query.tokenURL
       }, {
         headers: getHeaders()
       });
@@ -223,7 +217,7 @@ function Preview({ responseD }) {
     instance
       .logoutPopup()
       .then((data) => {
-        redirect(`/?id=${query.id}&bodyData=${query.bodyData}&salesforceURI=${query.salesforceURI}&tokenURL=${query.tokenURL}`);
+        redirect(`/?id=${query.id}`);
         window.location.reload();
       })
       .catch((e) => {
@@ -239,7 +233,7 @@ function Preview({ responseD }) {
         </div>
       }
       {
-        files ? (
+        query?.id !== '404' && files ? (
           <>
             <div className="container">
 
@@ -329,7 +323,7 @@ function Preview({ responseD }) {
           </>
         ) : <></>
       }
-      <ErrorComponent error={error} expired={expired} logOut={logOut} />
+      <ErrorComponent error={error} query={query?.id} expired={expired} logOut={logOut} />
     </div>
   );
 }
