@@ -6,6 +6,8 @@ import './App.css'
 import { useMsal } from "@azure/msal-react";
 import { redirect } from "react-router-dom";
 import CsvReader from "./CsvReader";
+import FolderTree from "./components/FolderTree";
+import { explorer } from "./components/dummy";
 
 
 const extensionSupportCheck = (fileURL) => {
@@ -96,11 +98,8 @@ function Preview({ responseD }) {
     const urlParams = new URLSearchParams(queryString);
     // Access the data using the parameter name you used while passing it
     const id = urlParams.get('id');
-    const bodyData = urlParams.get('bodyData');
-    const salesforceURI = urlParams.get('salesforceURI');
-    const tokenURL = urlParams.get('tokenURL');
     // Now you can use the 'data' variable in your component
-    setQuery({ id, bodyData, salesforceURI, tokenURL })
+    setQuery({ id})
 
   }, []);
 
@@ -114,9 +113,7 @@ function Preview({ responseD }) {
         id: query.id,
         type: "fetchFileList",
         email: responseD?.mail,
-        bodyData: query.bodyData,
-        salesforceURI: query.salesforceURI,
-        tokenURL: query.tokenURL
+      
       }, {
         headers: getHeaders()
       });
@@ -165,10 +162,10 @@ function Preview({ responseD }) {
 
   //calling get file names list api when we get sso response and param ID
   useEffect(() => {
-    if (responseD) {
+    // if (responseD) {
       getFilesFromServer();
-    }
-  }, [query, responseD]);
+    // }
+  }, []);
 
   //calling get file URL api when we get sso response and param ID
   useEffect(() => {
@@ -239,14 +236,14 @@ function Preview({ responseD }) {
         </div>
       }
       {
-        files ? (
+        true ? (
           <>
             <div className="container">
 
               <div className="secondry-container">
                 <div className="sidebar">
                   <div style={{ fontWeight: "bold", fontSize: "15px" }}>Browse Files</div>
-                  {files.map((item, i) => {
+                  {/* {files.map((item, i) => {
                     return (
                       <div
                         key={item}
@@ -258,9 +255,10 @@ function Preview({ responseD }) {
                         {item}
                       </div>
                     );
-                  })}
+                  })} */}
+                  <FolderTree explorer={explorer}/>
                 </div>
-                <div className="preview">
+                {/* <div className="preview">
                   <div className="view-header">
                     <div style={{ display: "flex", alignItems: "center" }}>File name: {files[index]}{<button className="button-Next" onClick={handleImageDownload}>Download</button>}</div>
                     <div className="view-header-section">
@@ -323,7 +321,7 @@ function Preview({ responseD }) {
                     ) : null
                   }
 
-                </div>
+                </div> */}
               </div>
             </div>
           </>

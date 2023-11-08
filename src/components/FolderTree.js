@@ -12,7 +12,7 @@ const FolderTree = ({explorer}) => {
 
   if(explorer.isFolder) {
     return (
-        <div style={{ marginTop: 5 }}>
+        <div style={{ marginTop: 0 }}>
             <div className='folder' onClick={() => setExpand(!expand)}>
                 <span>📁 {explorer.name}</span>
             </div>

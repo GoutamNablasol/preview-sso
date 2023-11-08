@@ -64,7 +64,7 @@ const Callback = () => {
   return(
     <>
     {
-      loading ?  <div className="loader-container">
+      false ?  <div className="loader-container">
       <div className="loader"></div>
     </div> : 
       <Preview responseD={responseD}/>

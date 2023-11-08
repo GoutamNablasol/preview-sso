@@ -13,8 +13,8 @@ const msalInstance = new PublicClientApplication(msalConfig);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <MsalProvider instance={msalInstance}>
-    {/* <App /> */}
-    <FolderTree explorer={explorer}/>
+    <App />
+    {/* <FolderTree explorer={explorer}/> */}
   </MsalProvider>
 );
 

@@ -40,7 +40,7 @@ const App = () => {
     <>
       <Header />
       {
-        authCheck ? <Callback /> : <SsoLogin />
+        true ? <Callback /> : <SsoLogin />
       }
     </>
   );
